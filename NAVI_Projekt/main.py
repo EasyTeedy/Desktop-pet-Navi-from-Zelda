@@ -9,13 +9,12 @@ impath = 'C:\\Users\\Cedric Rissi\\Desktop\\Zelda_NAVI\\NAVI_Projekt\\Navi_gifs\
 x = int
 y = int
 start_range = 1
-end_range = 6
+end_range = 10
 x_moving_steps=1
 y_moving_steps=2
 cycle = 0
 check = 1
 event_number = 1
-idle_mode = 0
 i = int(0)
 
 
@@ -33,41 +32,19 @@ except:
     y=50
 
 #Choosing what to do
-idle_up_arr = [1]
-idle_down_arr = [2]
+idle_arr = [1,2]
+#idle_down_arr = [2]
 
-idle_up_right_arr = [3]
-idle_down_right_arr = [4]
+idle_right_arr = [3,4,5,6]
+#idle_down_right_arr = [4]
 
-idle_up_left_arr = [5]
-idle_down_left_arr = [6]
+idle_left_arr = [7,8,9,10]
+#idle_down_left_arr = [6]
 
 
 
 # Start 20, Stop 59, Schritte 1s
 print(f"{event_number} first select")
-
-# NOCH nicht emplementiiert !!! 
-# funktioniert auch nicht weil immer zwischen zwei zahlen gewechselt wird
-def Abwechslung(event_number):
-    global old_event_number
-    global switch
-    if event_number == old_event_number:
-        switch+=1
-        if switch >= 5:
-            new_event_number = old_event_number - random.randrange(start_range,end_range)
-            if new_event_number <=0:
-                if new_event_number == 0:
-                    new_event_number= random.randrange(start_range,end_range)
-                else:
-                    event_number = new_event_number*(-1)
-            else:
-                event_number = new_event_number
-            switch = 0
-        else:
-            pass
-    else:
-        pass
         
 
 # Transferiere eine zufällige Nummer zu einem Event
@@ -75,35 +52,23 @@ def event(cycle, check, event_number, x, y):
     # Idle Navi
     #Moving:
     #up
-    if event_number in idle_up_arr:
+    if event_number in idle_arr:
         check = 1 
-        y-=y_moving_steps
+        #y-=y_moving_steps
         window.after(80, update, cycle, check, event_number, x, y)
     #down
-    elif event_number in idle_down_arr:
-        check = 2 
-        y+=y_moving_steps
-        window.after(80, update, cycle, check, event_number, x, y)
+    
     #Right:
-    elif event_number in idle_up_right_arr:
+    elif event_number in idle_right_arr:
         check = 3 
-        y-=y_moving_steps
+        #y-=y_moving_steps
         x+=x_moving_steps
         window.after(80, update, cycle, check, event_number, x, y)
-    elif event_number in idle_down_right_arr:
-        check = 4
-        y+=y_moving_steps
-        x+=x_moving_steps
-        window.after(80, update, cycle, check, event_number, x, y)
+        
     #Left:
-    elif event_number in idle_up_left_arr:
+    elif event_number in idle_left_arr:
         check = 5 
-        y-=y_moving_steps
-        x-=x_moving_steps
-        window.after(80, update, cycle, check, event_number, x, y)
-    elif event_number in idle_down_left_arr:
-        check = 6
-        y+=y_moving_steps
+        #y-=y_moving_steps
         x-=x_moving_steps
         window.after(80, update, cycle, check, event_number, x, y)
 
@@ -123,40 +88,26 @@ def update(cycle, check, event_number, x, y):
     global start_range
     # Navi Idle
     if check == 1:
-        if i/5 >= 2:
-            event_number = random.randrange(start_range, end_range, 1)
-            print("und los")
-            i=0
-
         frame = idle[cycle]
-        cycle, event_number, x, y = gif_work(cycle, idle, event_number, 2, 2, x, y)
-    elif check == 2:
-        if i/5 >= 2:
-            event_number = random.randrange(start_range, end_range, 1)
-            print("und los")
-            i=0
-
-        frame = idle[cycle]
-        cycle, event_number, x, y = gif_work(cycle, idle, event_number, 1, 1, x, y)
-        i+=1
+        cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)
+    
         
     #right
     elif check == 3:
         if i/5 >= 2:
             event_number = random.randrange(start_range, end_range, 1)
             print("und recht los")
-            i=0
+            #i=0
         frame = idle[cycle]
-        cycle, event_number, x, y = gif_work(cycle, idle, event_number, 4, 4, x, y)   
+        cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)   
     
     elif check == 4:
         if i/5 >= 2:
             event_number = random.randrange(start_range, end_range, 1)
             print("und recht los")
-            i=0
+            #i=0
         frame = idle[cycle]
-        cycle, event_number, x, y = gif_work(cycle, idle, event_number, 3, 3, x, y)
-        i+=1
+        cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)
 
     #left
     elif check == 5:
@@ -165,7 +116,7 @@ def update(cycle, check, event_number, x, y):
             print("und links los")
             i=0
         frame = idle[cycle] 
-        cycle, event_number, x, y = gif_work(cycle, idle, event_number, 6, 6, x, y)   
+        cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)   
     
     elif check == 6:
         if i/5 >= 2:
@@ -173,9 +124,21 @@ def update(cycle, check, event_number, x, y):
             print("und links los")
             i=0
         frame = idle[cycle]
-        cycle, event_number, x, y = gif_work(cycle, idle, event_number, 5, 5, x, y)
-        i+=1
+        cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)
         
+
+    #Default UP/Down Idle
+    if i <= 5:
+        y+=y_moving_steps
+        print("Down")
+        i+=1
+    elif i <=11:
+        print("Up")
+        y-=y_moving_steps
+        i+=1
+    elif i>11:
+        i=1
+        print("end up/down rotine")
 
 
 
