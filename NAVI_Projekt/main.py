@@ -1,4 +1,5 @@
 import random
+import pyautogui
 import tkinter as tk
 from screen_parameter import get_screen_resolution
 
@@ -8,6 +9,10 @@ impath = 'C:\\Users\\Cedric Rissi\\Desktop\\Zelda_NAVI\\NAVI_Projekt\\Navi_gifs\
 # Startvariablen
 x = int
 y = int
+#Parameter für funktion Following Kurser:
+follow_x = 2
+follow_y = 1
+#default Werte:
 start_range = 1
 end_range = 10
 x_moving_steps=1
@@ -45,7 +50,29 @@ idle_left_arr = [7,8,9,10]
 
 # Start 20, Stop 59, Schritte 1s
 print(f"{event_number} first select")
-        
+
+#gif ist bewegung nach up/down left/right ist Maus zeiger abhängig
+def follow_curser(x,y):
+    maus_x, maus_y = pyautogui.position()
+    global follow_x
+    global follow_y
+
+    if(maus_y < y):
+        y-=follow_y
+    elif(maus_y > y):
+        y+=follow_y
+
+    if(maus_x - 30 <= x <= maus_x + 30):
+        return x, y
+
+    if(maus_x < x):
+        x-=follow_x
+    elif(maus_x > x):
+        x+=follow_x
+
+    print("maus_x:", maus_x, "maus_y:", maus_y)
+    print("x:", x, "y:", y)  
+    return x,y   
 
 # Transferiere eine zufällige Nummer zu einem Event
 def event(cycle, check, event_number, x, y):
@@ -61,14 +88,12 @@ def event(cycle, check, event_number, x, y):
     #Right:
     elif event_number in idle_right_arr:
         check = 3 
-        #y-=y_moving_steps
         x+=x_moving_steps
         window.after(80, update, cycle, check, event_number, x, y)
         
     #Left:
     elif event_number in idle_left_arr:
         check = 5 
-        #y-=y_moving_steps
         x-=x_moving_steps
         window.after(80, update, cycle, check, event_number, x, y)
 
@@ -141,16 +166,16 @@ def update(cycle, check, event_number, x, y):
         print("end up/down rotine")
 
 
-
+    x,y = follow_curser(x,y)
     # Fenstergröße und Position
-    window.geometry('120x100+' + str(x) + "+" + str(y))
+    window.geometry('120x100+' + str(x-60) + "+" + str(y-15))
     label.configure(image=frame)
     window.after(5, event, cycle, check, event_number, x, y)
     print(event_number)
 
 window = tk.Tk()
 
-# Lade GIFs
+# Lade GIF
 idle = [tk.PhotoImage(file=impath + 'idle.gif', format='gif -index %i' % i) for i in range(5)]
 
 window.config(highlightbackground='green')
