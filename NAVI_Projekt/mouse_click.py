@@ -1,27 +1,17 @@
-#!/usr/bin/python
-from random import choice
-import tkinter
-root = tkinter.Tk()
-root.title("root")
-root.geometry("400x400+200+200")
-# Code to add widgets will go here...
+from pynput import mouse
 
-sceltavecchia = ""
-colori = ['red','yellow','green','azure',"blue","coral","gold"]
-def changecolor(event):
-	global colori, sceltavecchia
-	if sceltavecchia != "":
-		colori.pop(colori.index(sceltavecchia))
-		scelta = choice(colori)
-		colori.append(sceltavecchia)
-	else:
-		scelta = choice(colori)
-	root['bg'] = scelta
-	sceltavecchia = scelta
+class MouseListener:
+    def __init__(self):
+        self.left_button_pressed = False
 
-label = tkinter.Label(root, text="Click where you want to change color")
-label.pack(fill=tkinter.BOTH)
+    def on_click(self, x, y, button, pressed):
+        if button == mouse.Button.left:
+            self.left_button_pressed = pressed
+            print(f"Left button {'pressed' if pressed else 'released'} at ({x}, {y})")
 
 
-root.bind("<Button-1>", changecolor)
-root.mainloop()
+mouse_listener = MouseListener()
+
+with mouse.Listener(on_click=mouse_listener.on_click) as listener:
+	listener.join()
+
