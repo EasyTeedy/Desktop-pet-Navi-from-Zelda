@@ -15,16 +15,15 @@ x
 def follow_curser():
     maus_x, maus_y = pyautogui.position()
 
-    
     if(maus_x < x):
-        x+=3
+        x+=4
     elif(maus_x > x):
-        x-=3
+        x-=4
 
     if(maus_y < y):
-        y+=3
+        y+=4
     elif(maus_y > y):
-        y-=3
+        y-=4
 
     print("maus_x:", maus_x, "maus_y:", maus_y)
     print("x:", x, "y:", y)

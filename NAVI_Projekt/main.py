@@ -19,7 +19,7 @@ class MouseListener:
             self.left_button_pressed = pressed
             global HIT_ON_MAUS
             HIT_ON_MAUS = True
-            print(f"Left button {'pressed' if pressed else 'released'} at ({x}, {y})")
+            #print(f"Left button {'pressed' if pressed else 'released'} at ({x}, {y})")
 mouse_listener = MouseListener()
 #^^^^Nicht machen es funktioniert aus irgend einem grund so xD 1^^^
 #-----------------------------------------------------------#
@@ -88,9 +88,6 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
             if HIT_ON_MAUS == True:
                 print("HAUA!!")
                 messagebox.showinfo("YOU JERK!!!", "Try ME!! \n I can do os.remove(win32)")
-
-                
-
                 HIT_ON_MAUS = False
             return x, y
         
