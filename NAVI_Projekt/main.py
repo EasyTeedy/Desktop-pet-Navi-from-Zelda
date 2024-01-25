@@ -32,7 +32,7 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
     x = int
     y = int
     #Parameter für Interaktable:
-   
+    count_hits = 0
 
     #Parameter für funktion Following Kurser:
     follow_x = 2
@@ -90,9 +90,11 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
             if HIT_ON_MAUS == True:
                 global idle2
                 global displaed_gif
-                displaed_gif = idle2
+                global count_hits
+                count_hits+=1
+                displaed_gif = idle_aua
                 print("AUA!!")
-                messagebox.showinfo("YOU JERK!!!", "Try ME!! \n I can do os.remove(win32)")
+
                 HIT_ON_MAUS = False
         
 
@@ -142,6 +144,20 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
         global i
         global end_range
         global start_range
+        global displaed_gif
+        
+        #After one whole cycle switch back to idle or idle2
+        #print(cycle)
+        if cycle == len(displaed_gif)-1 and count_hits >= 5:
+            displaed_gif=idle2
+        elif cycle == len(displaed_gif)-1:
+            print("cycle switch")
+            displaed_gif= idle
+            if count_hits >= 5:
+                displaed_gif=idle2
+        
+                
+
         # Navi Idle
         if check == 1:
             frame = displaed_gif[cycle]
@@ -211,9 +227,11 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
     window = tk.Tk()
 
     # Lade GIF
-    idle = [tk.PhotoImage(file="NAVI_Projekt\\Navi_gifs\\idle2.gif", format='gif -index %i' % i) for i in range(5)]
+    idle = [tk.PhotoImage(file="NAVI_Projekt\\Navi_gifs\\idle.gif", format='gif -index %i' % i) for i in range(5)]
     idle2 = [tk.PhotoImage(file="NAVI_Projekt\\Navi_gifs\\idle2.gif", format='gif -index %i' % i) for i in range(5)]
-    displaed_gif = idle2
+    idle_aua = [tk.PhotoImage(file="NAVI_Projekt\\Navi_gifs\\idle_aua.gif", format='gif -index %i' % i) for i in range(5)]
+
+    displaed_gif = idle
 
     window.config(highlightbackground='green')
     window.config(background="green")
