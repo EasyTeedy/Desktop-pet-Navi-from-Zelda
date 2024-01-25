@@ -19,9 +19,8 @@ class MouseListener:
             self.left_button_pressed = pressed
             global HIT_ON_MAUS
             HIT_ON_MAUS = True
-            #print(f"Left button {'pressed' if pressed else 'released'} at ({x}, {y})")
 mouse_listener = MouseListener()
-#^^^^Nicht machen es funktioniert aus irgend einem grund so xD 1^^^
+#^^^^Nicht machen es funktioniert aus irgend einem grund so xD ^^^
 #-----------------------------------------------------------#
 
 with mouse.Listener(on_click=mouse_listener.on_click) as listener:
@@ -32,6 +31,9 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
     # Startvariablen
     x = int
     y = int
+    #Parameter für Interaktable:
+   
+
     #Parameter für funktion Following Kurser:
     follow_x = 2
     follow_y = 1
@@ -84,12 +86,14 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
         elif(maus_y > y):
             y+=follow_y
 
-        if(maus_x - 30 <= x <= maus_x + 30):
+        if(maus_x - 10 <= x <= maus_x + 10 and maus_y - 10 <= y <= maus_y + 10):
             if HIT_ON_MAUS == True:
-                print("HAUA!!")
+                global idle2
+                global displaed_gif
+                displaed_gif = idle2
+                print("AUA!!")
                 messagebox.showinfo("YOU JERK!!!", "Try ME!! \n I can do os.remove(win32)")
                 HIT_ON_MAUS = False
-            return x, y
         
 
         if(maus_x < x):
@@ -140,8 +144,8 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
         global start_range
         # Navi Idle
         if check == 1:
-            frame = idle[cycle]
-            cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)
+            frame = displaed_gif[cycle]
+            cycle, event_number, x, y = gif_work(cycle, displaed_gif, event_number, start_range, end_range, x, y)
         
             
         #right
@@ -150,16 +154,16 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
                 event_number = random.randrange(start_range, end_range, 1)
                 #print("und recht los")
                 #i=0
-            frame = idle[cycle]
-            cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)   
+            frame = displaed_gif[cycle]
+            cycle, event_number, x, y = gif_work(cycle, displaed_gif, event_number, start_range, end_range, x, y)   
         
         elif check == 4:
             if i/5 >= 2:
                 event_number = random.randrange(start_range, end_range, 1)
                 #print("und recht los")
                 #i=0
-            frame = idle[cycle]
-            cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)
+            frame = displaed_gif[cycle]
+            cycle, event_number, x, y = gif_work(cycle, displaed_gif, event_number, start_range, end_range, x, y)
 
         #left
         elif check == 5:
@@ -167,16 +171,16 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
                 event_number = random.randrange(start_range, end_range, 1)
                 #print("und links los")
                 i=0
-            frame = idle[cycle] 
-            cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)   
+            frame = displaed_gif[cycle] 
+            cycle, event_number, x, y = gif_work(cycle, displaed_gif, event_number, start_range, end_range, x, y)   
         
         elif check == 6:
             if i/5 >= 2:
                 event_number = random.randrange(start_range, end_range, 1)
                 #print("und links los")
                 i=0
-            frame = idle[cycle]
-            cycle, event_number, x, y = gif_work(cycle, idle, event_number, start_range, end_range, x, y)
+            frame = displaed_gif[cycle]
+            cycle, event_number, x, y = gif_work(cycle, displaed_gif, event_number, start_range, end_range, x, y)
             
 
         #Default UP/Down Idle
@@ -207,7 +211,9 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
     window = tk.Tk()
 
     # Lade GIF
-    idle = [tk.PhotoImage(file=impath + 'idle.gif', format='gif -index %i' % i) for i in range(5)]
+    idle = [tk.PhotoImage(file="NAVI_Projekt\\Navi_gifs\\idle2.gif", format='gif -index %i' % i) for i in range(5)]
+    idle2 = [tk.PhotoImage(file="NAVI_Projekt\\Navi_gifs\\idle2.gif", format='gif -index %i' % i) for i in range(5)]
+    displaed_gif = idle2
 
     window.config(highlightbackground='green')
     window.config(background="green")
