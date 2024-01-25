@@ -145,16 +145,24 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
         global end_range
         global start_range
         global displaed_gif
+        global follow_x
+        global follow_y
         
         #After one whole cycle switch back to idle or idle2
         #print(cycle)
         if cycle == len(displaed_gif)-1 and count_hits >= 5:
             displaed_gif=idle2
+            if count_hits >= 5:
+                displaed_gif=idle2
+                if count_hits >= 10:
+                    displaed_gif=idle_aua
+                    follow_x = 15
+                    follow_y = 15
         elif cycle == len(displaed_gif)-1:
             print("cycle switch")
             displaed_gif= idle
-            if count_hits >= 5:
-                displaed_gif=idle2
+            
+                
         
                 
 
@@ -221,7 +229,7 @@ with mouse.Listener(on_click=mouse_listener.on_click) as listener:
         # Fenstergröße und Position
         window.geometry('120x100+' + str(x-60) + "+" + str(y-15))
         label.configure(image=frame)
-        window.after(5, event, cycle, check, event_number, x, y)
+        window.after(0, event, cycle, check, event_number, x, y)
         #print(event_number)
 
     window = tk.Tk()
